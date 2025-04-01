@@ -263,4 +263,60 @@ router.put('/:itemId', authMiddleware('owner'), foodItemController.updateFoodIte
  */
 router.delete('/:itemId', authMiddleware('owner'), foodItemController.deleteFoodItem);
 
+
+/**
+ * @swagger
+ * /api/fooditems/{itemId}:
+ *   get:
+ *     summary: Get a food item by ID
+ *     description: Allows customers to get a specific food item from the menu using the item's ID.
+ *     tags:
+ *       - Food Items
+ *     parameters:
+ *       - in: path
+ *         name: itemId
+ *         required: true
+ *         description: The ID of the food item to retrieve.
+ *         schema:
+ *           type: string
+ *           example: 60d3b41f3f5f6f1f48223b22
+ *     responses:
+ *       200:
+ *         description: A single food item
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: "60d3b41f3f5f6f1f48223b22"
+ *                     name:
+ *                       type: string
+ *                       example: "Cheese Pizza"
+ *                     description:
+ *                       type: string
+ *                       example: "A delicious cheese pizza with mozzarella and cheddar."
+ *                     price:
+ *                       type: number
+ *                       example: 9.99
+ *                     category:
+ *                       type: string
+ *                       example: "MAINCOURSE"
+ *                     imageURL:
+ *                       type: string
+ *                       example: "http://example.com/images/cheese-pizza.jpg"
+ *                     isVisible:
+ *                       type: boolean
+ *                       example: true
+ *       404:
+ *         description: Food item not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/:itemId', foodItemController.getOneFoodItem);
+
 module.exports = router;
