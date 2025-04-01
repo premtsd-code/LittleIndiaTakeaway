@@ -7,7 +7,7 @@ const authController = require('../controllers/authController');
  * /api/auth/register:
  *   post:
  *     summary: Register a new user
- *     description: Allows a new user (owner or customer) to register in the system.
+ *     description: Allows a new user (customer) to register in the system.
  *     tags:
  *       - Authentication
  *     requestBody:
@@ -34,9 +34,8 @@ const authController = require('../controllers/authController');
  *               role:
  *                 type: string
  *                 enum:
- *                   - owner
  *                   - customer
- *                 description: Role of the user (owner or customer).
+ *                 description: Role of the user (customer).
  *     responses:
  *       201:
  *         description: User registered successfully
