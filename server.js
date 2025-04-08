@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const cloudinary = require('cloudinary').v2;
+const cors = require('cors');  // For enabling cross-origin requests from React
 const authRoutes = require('./routes/authRoutes');
 const foodItemRoutes = require('./routes/foodItemRoutes');
 const swaggerUi = require('swagger-ui-express');
@@ -48,6 +50,14 @@ app.use('/api/auth', authRoutes);
 app.use('/api/deliveryslots', deliverySlotsRoutes);
 
 app.use('/api/fooditems', foodItemRoutes);
+
+cloudinary.config({
+  cloud_name: 'dhpwsr9l0',
+  api_key: '468359717658564',
+  api_secret: 'aV_j1eBuEWYKNkxFJ-t5DBkM-_0',
+});
+
+app.use(cors());
 
 
 

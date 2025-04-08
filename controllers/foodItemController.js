@@ -1,25 +1,56 @@
 const FoodItem = require('../models/FoodItem');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const multerStorageCloudinary = require('multer-storage-cloudinary');  // Ensure correct import
+const storage = new multerStorageCloudinary.CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'restaurant-takeaway-images',  // Specify the Cloudinary folder
+    allowed_formats: ['jpg', 'jpeg', 'png'],  // Allowed image formats
+  },
+});
+const upload = multer({ storage });
+
 
 // Create a new food item
+// Create a new food item with image upload to Cloudinary
 exports.createFoodItem = async (req, res) => {
-  const { name, description, price, category, imageURL, isVisible } = req.body;
+  // First, handle the image upload
+  upload.single('image')(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Image upload failed', message: err.message });
+    }
 
-  try {
-    const newFoodItem = new FoodItem({
-      name,
-      description,
-      price,
-      category,
-      imageURL,
-      isVisible,
-    });
-    
-    await newFoodItem.save();
-    res.status(201).json({ message: 'Food item created successfully', data: newFoodItem });
-  } catch (err) {
-    res.status(400).json({ error: 'Error creating food item', message: err.message });
-  }
+    const { name, description, price, category, isVisible } = req.body;
+    const imageURL = req.file.path;  // Cloudinary image URL
+
+
+    // if (!name || !description || !price || !category || !imageURL) {
+    //   return res.status(400).json({ error: 'All fields are required' });
+    // }
+
+
+    try {
+      // Create a new food item with the image URL from Cloudinary
+      const newFoodItem = new FoodItem({
+        name,
+        description,
+        price,
+        category,
+        imageURL,
+        isVisible,
+      });
+
+      // Save the food item in the database
+      await newFoodItem.save();
+      res.status(201).json({ message: 'Food item created successfully', data: newFoodItem });
+    } catch (err) {
+      res.status(400).json({ error: 'Error creating food item', message: err.message });
+    }
+  });
 };
+
+
 
 // Get a single food item by ID
 exports.getOneFoodItem = async (req, res) => {
