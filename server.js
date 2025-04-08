@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 
 const ownerRoutes = require('./routes/ownerRoutes');
 const customerRoutes = require('./routes/customerRoutes');
+const deliverySlotsRoutes = require('./routes/deliverySlotsRoutes'); // Import routes
 
 
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.get('/', function(req, res){
 app.use('/api/owner', ownerRoutes);
 app.use('/api/customer', customerRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/deliveryslots', deliverySlotsRoutes);
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
