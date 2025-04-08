@@ -1,4 +1,4 @@
-const Order = require('../models/orderSchema');  // Import the Order model
+const Order = require('../models/OrderSchema');
 
 // Function to create a new order
 exports.createOrder = async (req, res) => {
