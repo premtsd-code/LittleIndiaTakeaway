@@ -37,16 +37,7 @@ const PORT = process.env.PORT || 3000;
 mongoose.connect('mongodb+srv://gptpremium2425:shAfCpg2xyPmMfF2@internetsolutions.e6idy0q.mongodb.net/?retryWrites=true&w=majority&appName=internetsolutions', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.json());
-app.get('/', function(req, res) {
-  res.send('Use Postman.');
-});
 
-app.use('/api/owner', ownerRoutes);
-app.use('/api/customer', customerRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/deliveryslots', deliverySlotsRoutes);
-app.use('/api/orders', orderRoutes);  // Register the order routes
-app.use('/api/fooditems', foodItemRoutes);
 
 cloudinary.config({
   cloud_name: 'dhpwsr9l0',
@@ -78,5 +69,15 @@ const csrfProtection = csrf({ cookie: true });
 // app.post('/api/your-protected-route', csrfProtection, (req, res) => {
 //   res.json({ csrfToken: req.csrfToken() });
 // });
+app.options('*', cors(corsOptions));
+app.get('/', function(req, res) {
+  res.send('Use Postman.');
+});
 
+app.use('/api/owner', ownerRoutes);
+app.use('/api/customer', customerRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/deliveryslots', deliverySlotsRoutes);
+app.use('/api/orders', orderRoutes);  // Register the order routes
+app.use('/api/fooditems', foodItemRoutes);
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
