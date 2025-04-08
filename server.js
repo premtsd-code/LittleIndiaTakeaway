@@ -56,10 +56,12 @@ cloudinary.config({
 
 // CORS setup (to allow all origins or specific ones)
 const corsOptions = {
-  origin: '*',  // Allow all origins (adjust this if you want to restrict to specific origins)
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: 'http://localhost:3000', // Replace with your React frontend's URL (localhost if you're testing locally)
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specific HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers like Content-Type and Authorization
+  credentials: true, // Allow cookies and credentials (if needed)
 };
+
 
 app.use(cors(corsOptions));  // Apply CORS middleware
 
