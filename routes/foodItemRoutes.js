@@ -11,29 +11,24 @@ const authMiddleware = require('../middleware/authMiddleware');
  *     description: Allows the owner to create a new food item in the restaurant menu.
  *     tags:
  *       - Food Items
+ *     security:
+ *       - bearerAuth: []  // This ensures that authentication is required (owner only)
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
- *             required:
- *               - name
- *               - description
- *               - price
- *               - category
- *               - imageURL
- *               - isVisible
  *             properties:
  *               name:
  *                 type: string
- *                 description: The name of the food item.
+ *                 description: The name of the food item
  *               description:
  *                 type: string
- *                 description: The description of the food item.
+ *                 description: The description of the food item
  *               price:
  *                 type: number
- *                 description: The price of the food item.
+ *                 description: The price of the food item
  *               category:
  *                 type: string
  *                 enum:
@@ -41,13 +36,14 @@ const authMiddleware = require('../middleware/authMiddleware');
  *                   - MAINCOURSE
  *                   - DESSERTS
  *                   - DRINKS
- *                 description: The category of the food item.
- *               imageURL:
+ *                 description: The category of the food item
+ *               image:
  *                 type: string
- *                 description: URL of the food item image.
+ *                 format: binary
+ *                 description: The image file for the food item (image upload)
  *               isVisible:
  *                 type: boolean
- *                 description: Whether the food item is visible to customers or not.
+ *                 description: Whether the food item is visible to customers
  *     responses:
  *       201:
  *         description: Food item created successfully
@@ -79,7 +75,7 @@ const authMiddleware = require('../middleware/authMiddleware');
  *                       example: "MAINCOURSE"
  *                     imageURL:
  *                       type: string
- *                       example: "http://example.com/images/cheese-pizza.jpg"
+ *                       example: "https://res.cloudinary.com/your-cloud-name/image/upload/v1625815132/restaurant-takeaway-images/cheese-pizza.jpg"
  *                     isVisible:
  *                       type: boolean
  *                       example: true
@@ -92,9 +88,30 @@ const authMiddleware = require('../middleware/authMiddleware');
  *               properties:
  *                 error:
  *                   type: string
- *                   example: "Invalid input"
+ *                   example: "All fields are required"
+ *       401:
+ *         description: Unauthorized - Only owners can create food items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Unauthorized"
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Error creating food item"
  */
 router.post('/create', authMiddleware('owner'), foodItemController.createFoodItem);
+
 
 /**
  * @swagger
