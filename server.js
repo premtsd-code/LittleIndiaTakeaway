@@ -31,7 +31,7 @@ const swaggerOptions = {
 const ownerRoutes = require('./routes/ownerRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 const deliverySlotsRoutes = require('./routes/deliverySlotsRoutes'); // Import routes
-
+const orderRoutes=require('./routes/orderRoutes');
 
 const PORT = process.env.PORT || 3000;
 
@@ -46,6 +46,7 @@ app.use('/api/customer', customerRoutes);
 app.use('/api/auth', authRoutes);
 
 app.use('/api/deliveryslots', deliverySlotsRoutes);
+app.use('/api/orders', orderRoutes);  // Register the order routes
 
 app.use('/api/fooditems', foodItemRoutes);
 
