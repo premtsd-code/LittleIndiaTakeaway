@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Order = require('../models/orders/orderSchema');  // Example if file is inside an 'orders' folder
+
 
 // Item Schema for each ordered item
 const itemSchema = new mongoose.Schema({
