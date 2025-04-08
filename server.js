@@ -58,7 +58,21 @@ cloudinary.config({
   api_secret: 'aV_j1eBuEWYKNkxFJ-t5DBkM-_0',
 });
 
-app.use(cors());
+
+const corsOptions = {
+  origin: false, // Disable CORS by not allowing any origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: true });
+
+// Remove this line if you're using CSRF globally
+app.use(csrfProtection);  // This line disables CSRF protection for the entire app
+
 
 
 
