@@ -2,6 +2,30 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const authRoutes = require('./routes/authRoutes');
+const foodItemRoutes = require('./routes/foodItemRoutes');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerOptions = {
+    definition: {
+      openapi: '3.0.0',  // OpenAPI version
+      info: {
+        title: 'Restaurant Takeaway API',
+        version: '1.0.0',
+        description: 'API Documentation for the Restaurant Takeaway Site',
+      },
+      servers: [
+        {
+          url: 'https://littleindia-f52f947eb8a9.herokuapp.com',  // Adjust the URL to your environment (Heroku or localhost)
+        },
+      ],
+    },
+    apis: ['./routes/*.js'],  // Path to your API routes
+  };
+  
+  const swaggerDocs = swaggerJsdoc(swaggerOptions);
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+  
+
 
 
 const ownerRoutes = require('./routes/ownerRoutes');
@@ -20,7 +44,11 @@ app.get('/', function(req, res){
 app.use('/api/owner', ownerRoutes);
 app.use('/api/customer', customerRoutes);
 app.use('/api/auth', authRoutes);
+
 app.use('/api/deliveryslots', deliverySlotsRoutes);
+
+app.use('/api/fooditems', foodItemRoutes);
+
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

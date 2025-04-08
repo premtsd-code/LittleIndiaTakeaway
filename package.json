@@ -5,7 +5,9 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.15.0",
-    "mongoose": "^8.13.0"
+    "mongoose": "^8.13.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "name": "littleindiatakeaway",
   "version": "1.0.0",
@@ -14,8 +16,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-
-"start": "node server.js",
+  "start": "node server.js",
   "author": "",
   "license": "ISC",
   "description": ""
