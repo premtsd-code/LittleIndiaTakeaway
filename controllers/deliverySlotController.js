@@ -4,6 +4,7 @@ const DeliverySlot = require('../models/DeliverySlot'); // Assuming your model i
 exports.getAllDeliverySlots = async (req, res) => {
   try {
     const deliverySlots = await DeliverySlot.find();
+    console.log(deliverySlots);
     res.status(200).json(deliverySlots);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch delivery slots' });
