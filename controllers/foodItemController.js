@@ -138,3 +138,31 @@ exports.deleteFoodItem = async (req, res) => {
     res.status(400).json({ error: 'Error deleting food item', message: err.message });
   }
 };
+
+exports.bulkUpdateVisibility = async (req, res) => {
+  try {
+    const { updates } = req.body;
+
+    if (!Array.isArray(updates) || updates.length === 0) {
+      return res.status(400).json({ message: 'Invalid updates array' });
+    }
+
+    const bulkOps = updates.map(item => ({
+      updateOne: {
+        filter: { _id: item.id },
+        update: { $set: { isVisible: item.isVisible } }
+      }
+    }));
+
+    const result = await FoodItem.bulkWrite(bulkOps);
+
+    return res.status(200).json({
+      message: 'Visibility updated successfully',
+      result
+    });
+  } catch (error) {
+    console.error('Error in bulkUpdateVisibility:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
