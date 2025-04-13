@@ -77,28 +77,55 @@ exports.getAllFoodItems = async (req, res) => {
   }
 };
 
-// Update an existing food item by ID
+// Update an existing food item by ID with optional image upload
 exports.updateFoodItem = async (req, res) => {
-  const { itemId } = req.params;
-  const { name, description, price, category, imageURL, isVisible } = req.body;
-
-  try {
-    const updatedFoodItem = await FoodItem.findByIdAndUpdate(
-      itemId,
-      { name, description, price, category, imageURL, isVisible },
-      { new: true }
-    );
-    if (!updatedFoodItem) {
-      return res.status(404).json({ error: 'Food item not found' });
+  // First, handle the image upload
+  upload.single('image')(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Image upload failed', message: err.message });
     }
-    console.log(req.body);
-    console.log("-----Updated Data:------");
-    console.log(updatedFoodItem);
-    res.status(200).json({ message: 'Food item updated successfully', data: updatedFoodItem });
-  } catch (err) {
-    res.status(400).json({ error: 'Error updating food item', message: err.message });
-  }
+
+    const { itemId } = req.params;
+    const { name, description, price, category, isVisible } = req.body;
+
+    // If an image was uploaded, get its URL
+    const imageURL = req.file ? req.file.path : undefined;
+
+    // Build update data object
+    const updateData = {
+      name,
+      description,
+      price,
+      category,
+      isVisible,
+    };
+
+    // Conditionally add imageURL only if a new image was uploaded
+    if (imageURL) {
+      updateData.imageURL = imageURL;
+    }
+
+    try {
+      const updatedFoodItem = await FoodItem.findByIdAndUpdate(
+        itemId,
+        updateData,
+        { new: true }
+      );
+
+      if (!updatedFoodItem) {
+        return res.status(404).json({ error: 'Food item not found' });
+      }
+
+      console.log("-----Updated Data:------");
+      console.log(updatedFoodItem);
+
+      res.status(200).json({ message: 'Food item updated successfully', data: updatedFoodItem });
+    } catch (err) {
+      res.status(400).json({ error: 'Error updating food item', message: err.message });
+    }
+  });
 };
+
 
 // Delete a food item by ID
 exports.deleteFoodItem = async (req, res) => {
