@@ -27,7 +27,6 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-const ownerRoutes = require('./routes/ownerRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 const deliverySlotsRoutes = require('./routes/deliverySlotsRoutes');
 const orderRoutes = require('./routes/orderRoutes');
@@ -74,7 +73,6 @@ app.get('/', function(req, res) {
   res.send('Use Postman.');
 });
 
-app.use('/api/owner', ownerRoutes);
 app.use('/api/customer', customerRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/deliveryslots', deliverySlotsRoutes);
