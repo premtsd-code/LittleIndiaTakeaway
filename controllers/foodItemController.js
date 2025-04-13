@@ -91,6 +91,9 @@ exports.updateFoodItem = async (req, res) => {
     if (!updatedFoodItem) {
       return res.status(404).json({ error: 'Food item not found' });
     }
+    console.log(req.body);
+    console.log("-----Updated Data:------");
+    console.log(updatedFoodItem);
     res.status(200).json({ message: 'Food item updated successfully', data: updatedFoodItem });
   } catch (err) {
     res.status(400).json({ error: 'Error updating food item', message: err.message });
