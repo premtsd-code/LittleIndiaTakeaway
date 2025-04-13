@@ -291,4 +291,49 @@ router.delete('/:itemId', authMiddleware('owner'), foodItemController.deleteFood
  */
 router.get('/:itemId', foodItemController.getOneFoodItem);
 
+/**
+ * @swagger
+ * /api/fooditems/visibility:
+ *   post:
+ *     summary: Bulk update visibility of food items
+ *     description: Allows an owner to update the visibility of multiple food items.
+ *     tags:
+ *       - Food Items
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - updates
+ *             properties:
+ *               updates:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - id
+ *                     - isVisible
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: "60d3b41f3f5f6f1f48223b22"
+ *                     isVisible:
+ *                       type: boolean
+ *                       example: true
+ *     responses:
+ *       200:
+ *         description: Visibility updated successfully
+ *       400:
+ *         description: Invalid input
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/visibility', authMiddleware('owner'), foodItemController.bulkUpdateVisibility);
+
 module.exports = router;
