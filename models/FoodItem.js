@@ -16,7 +16,7 @@ const foodItemSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['STARTERS', 'MAINCOURSE', 'DESERTS', 'DRINKS'], // Enum categories
+    enum: ['STARTERS', 'MAINCOURSE', 'DESSERTS', 'DRINKS'], // Enum categories
     required: true,
   },
   imageURL: {
