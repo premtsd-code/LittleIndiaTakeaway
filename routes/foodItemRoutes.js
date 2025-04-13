@@ -3,6 +3,68 @@ const router = express.Router();
 const foodItemController = require('../controllers/foodItemController');
 const authMiddleware = require('../middleware/authMiddleware');
 
+
+/**
+ * @swagger
+ * /api/fooditems/create:
+ *   post:
+ *     summary: Create a new food item
+ *     description: Allows an owner to create a new food item and add it to the menu.
+ *     tags:
+ *       - Food Items
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - description
+ *               - price
+ *               - category
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "Veggie Burger"
+ *               description:
+ *                 type: string
+ *                 example: "A burger with fresh vegetables and sauces"
+ *               price:
+ *                 type: number
+ *                 example: 8.99
+ *               category:
+ *                 type: string
+ *                 enum: [STARTERS, MAINCOURSE, DESSERTS, DRINKS]
+ *                 example: MAINCOURSE
+ *               imageURL:
+ *                 type: string
+ *                 example: "http://example.com/images/veggie-burger.jpg"
+ *               isVisible:
+ *                 type: boolean
+ *                 example: true
+ *     responses:
+ *       201:
+ *         description: Food item created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Food item created successfully"
+ *                 data:
+ *                   $ref: '#/components/schemas/FoodItem'
+ *       400:
+ *         description: Invalid input
+ *       401:
+ *         description: Unauthorized – only owners can access this route
+ *       500:
+ *         description: Internal server error
+ */
 router.post('/create', authMiddleware('owner'), foodItemController.createFoodItem);
 
 
