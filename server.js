@@ -71,6 +71,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/deliveryslots', deliverySlotsRoutes);
 app.use('/api/orders', orderRoutes);  // Register the order routes
 app.use('/api/fooditems', foodItemRoutes);
-app.use('/api', dashboardRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
