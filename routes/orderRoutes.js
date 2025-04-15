@@ -6,6 +6,8 @@ const orderController = require('../controllers/orderController'); // Import the
 router.post('/', orderController.createOrder);
 router.get('/', orderController.getAllOrders);  
 router.put('/updateOrder/:orderId', orderController.updateOrder);
+router.post('/placeOrder', orderController.placeOrder);
+
 
 
 
