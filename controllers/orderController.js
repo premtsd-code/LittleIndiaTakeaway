@@ -252,3 +252,39 @@ exports.getTop5CompletedOrders = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch completed orders' });
   }
 };
+
+
+
+// Get all orders for a particular user
+exports.getAllOrdersForUser = async (req, res) => {
+  const { userId } = req.params;  // Extract the userId from the request parameters
+
+  try {
+    // Find orders that match the userId
+
+      // Find the user by userId and ensure the user exists
+  let user;
+  try {
+    user = await User.findOne({ userID: userId });
+    if (!user) {
+      return res.status(400).json({ error: `User with userId ${userId} not found` });
+    }
+  } catch (err) {
+    return res.status(500).json({ error: 'Error finding user', message: err.message });
+  }
+
+  console.log(user._id);
+
+    const orders = await Order.find({ userId: user._id });  // Filtering by userId
+
+    if (orders.length === 0) {
+      return res.status(404).json({ message: 'No orders found for this user' });
+    }
+
+    // Return the found orders
+    res.status(200).json(orders);
+  } catch (err) {
+    console.error('Error fetching orders for user:', err);
+    res.status(500).json({ error: 'Error fetching orders for this user' });
+  }
+};
