@@ -38,6 +38,13 @@ const orderSchema = new mongoose.Schema({
 });
 
 // Create a model from the schema
+orderSchema.virtual('description').get(function() {
+  // Generate a description for the order based on items
+  return this.items.map(item => `${item.quantity} x ${item.name}`).join(', ');
+});
+
+// Optional: To include virtuals when converting to JSON
+orderSchema.set('toJSON', { virtuals: true });
 const Order = mongoose.model('Order', orderSchema);
 
 module.exports = Order;

@@ -163,5 +163,94 @@ exports.placeOrder = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error placing the order', message: error.message });
+//dashboard apis :
+exports.getTotalOrderCount = async (req, res) => {
+  try {
+    const orders = await Order.find();
+    const size=orders.length;
+    res.status(200).json({
+      countOfOrders: size
+    });       
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
+  }
+};
+
+exports.getTotalPendingOrdersCount = async (req, res) => {
+  try {
+    const orders = await Order.find({ status: 'Pending' });
+    const size=orders.length;
+    res.status(200).json({
+      countOfPendingOrders: size
+    });       
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
+  }
+};
+
+exports.getTotalCompletedOrdersCount = async (req, res) => {
+  try {
+    const orders = await Order.find({ status: 'Completed' });
+    const size=orders.length;
+    res.status(200).json({
+      countOfCompletedOrders: size
+    });       
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
+  }
+};
+
+exports.getTotalOnHoldOrdersCount = async (req, res) => {
+  try {
+    const orders = await Order.find({ status: 'OnHold' });
+    const size=orders.length;
+    res.status(200).json({
+      countOfOnHoldOrders: size
+    });       
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
+  }
+};
+
+exports.getAllOrders = async (req, res) => {
+try {
+  const orders = await Order.find();  // This will fetch all orders from the database
+  res.status(200).json(orders);       // Send the orders as a JSON response
+} catch (err) {
+  res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
+}
+};
+
+
+exports.getTop5PendingOrders = async (req, res) => {
+  try {
+    const pendingOrders = await Order.find({ status: 'Pending' })
+      .sort({ dateTime: -1 }) // Sort by the most recent orders first
+      .limit(5); // Limit to 5 orders
+
+    if (pendingOrders.length === 0) {
+      return res.status(404).json({ message: 'No pending orders found' });
+    }
+
+    res.status(200).json(pendingOrders);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch pending orders' });
+  }
+};
+
+
+exports.getTop5CompletedOrders = async (req, res) => {
+  try {
+    const completedOrders = await Order.find({ status: 'Completed' })
+      .sort({ dateTime: -1 }) // Sort by the most recent orders first
+      .limit(5); // Limit to 5 orders
+
+    if (completedOrders.length === 0) {
+      return res.status(404).json({ message: 'No completed orders found' });
+    }
+
+    res.status(200).json(completedOrders);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch completed orders' });
   }
 };
