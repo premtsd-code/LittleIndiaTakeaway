@@ -13,6 +13,7 @@ router.get('/available', deliverySlotController.getAvailableTimeSlots);
 
 router.put('/saveSchedule', deliverySlotController.toggleDeliverySlots);
 
+router.get('/blocked',deliverySlotController.getBlockedTimeSlots);
 
 
 

@@ -129,7 +129,30 @@ exports.openCloseRestaurant = async (req, res) => {
   };
 
 
-
+  exports.getBlockedTimeSlots = async (req, res) => {
+    try {
+      // Get the current day (e.g., "Monday")
+      const daysOfWeek = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const currentDay = daysOfWeek[new Date().getDay()];  // Get the current day as a string
+  
+      // Find the delivery slot for the current day
+      const deliverySlot = await DeliverySlot.findOne({ day: currentDay });
+  
+      if (!deliverySlot) {
+        return res.status(404).json({ message: 'No delivery slot found for today' });
+      }
+  
+      // Filter available time slots
+      const blockedTimeSlots = deliverySlot.timeSlots.filter(slot => !slot.available);
+  
+      res.status(200).json({
+        day: currentDay,
+        blockedTimeSlots: blockedTimeSlots
+      });
+    } catch (err) {
+      res.status(500).json({ error: 'Failed to fetch available time slots' });
+    }
+  };
   
 
 //api to save schedule
