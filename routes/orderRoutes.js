@@ -4,7 +4,8 @@ const orderController = require('../controllers/orderController'); // Import the
 
 // POST route to create a new order
 router.post('/', orderController.createOrder);
-router.get('/', orderController.getAllOrders);  
+router.get('/', orderController.getAllOrders); 
+router.get('/:userId', orderController.getAllOrdersForUser);  
 router.put('/updateOrder/:orderId', orderController.updateOrder);
 
 /**
