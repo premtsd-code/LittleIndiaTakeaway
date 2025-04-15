@@ -15,23 +15,23 @@ const upload = multer({ storage });
 // Create a new food item
 // Create a new food item with image upload to Cloudinary
 exports.createFoodItem = async (req, res) => {
-  // First, handle the image upload
   upload.single('image')(req, res, async (err) => {
     if (err) {
       return res.status(500).json({ error: 'Image upload failed', message: err.message });
     }
 
     const { name, description, price, category, isVisible } = req.body;
-    const imageURL = req.file.path;  // Cloudinary image URL
-
-
-    // if (!name || !description || !price || !category || !imageURL) {
-    //   return res.status(400).json({ error: 'All fields are required' });
-    // }
-
 
     try {
-      // Create a new food item with the image URL from Cloudinary
+      // Upload to Cloudinary with transformations
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        transformation: [
+          { width: 200, height: 220, crop: "auto", gravity: "auto" }
+        ]
+      });
+
+      const imageURL = result.secure_url;
+
       const newFoodItem = new FoodItem({
         name,
         description,
@@ -41,7 +41,6 @@ exports.createFoodItem = async (req, res) => {
         isVisible,
       });
 
-      // Save the food item in the database
       await newFoodItem.save();
       res.status(201).json({ message: 'Food item created successfully', data: newFoodItem });
     } catch (err) {
@@ -49,6 +48,7 @@ exports.createFoodItem = async (req, res) => {
     }
   });
 };
+
 
 
 
@@ -79,7 +79,6 @@ exports.getAllFoodItems = async (req, res) => {
 
 // Update an existing food item by ID with optional image upload
 exports.updateFoodItem = async (req, res) => {
-  // First, handle the image upload
   upload.single('image')(req, res, async (err) => {
     if (err) {
       return res.status(500).json({ error: 'Image upload failed', message: err.message });
@@ -88,24 +87,33 @@ exports.updateFoodItem = async (req, res) => {
     const { itemId } = req.params;
     const { name, description, price, category, isVisible } = req.body;
 
-    // If an image was uploaded, get its URL
-    const imageURL = req.file ? req.file.path : undefined;
-
-    // Build update data object
-    const updateData = {
-      name,
-      description,
-      price,
-      category,
-      isVisible,
-    };
-
-    // Conditionally add imageURL only if a new image was uploaded
-    if (imageURL) {
-      updateData.imageURL = imageURL;
-    }
-
     try {
+      let imageURL;
+
+      // If an image is uploaded, process with Cloudinary
+      if (req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          transformation: [
+            { width: 200, height: 220, crop: "auto", gravity: "auto" }
+          ]
+        });
+
+        imageURL = result.secure_url;
+      }
+
+      // Build update data object
+      const updateData = {
+        name,
+        description,
+        price,
+        category,
+        isVisible,
+      };
+
+      if (imageURL) {
+        updateData.imageURL = imageURL;
+      }
+
       const updatedFoodItem = await FoodItem.findByIdAndUpdate(
         itemId,
         updateData,
@@ -122,6 +130,7 @@ exports.updateFoodItem = async (req, res) => {
     }
   });
 };
+
 
 
 // Delete a food item by ID
