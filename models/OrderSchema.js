@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const DeliverySlot = require('./DeliverySlot');  
 // Item Schema for each ordered item
 const itemSchema = new mongoose.Schema({
-  uID: { type: String, required: true },  // Unique ID of the food item
+  _id: { type: String, required: true },  // Unique ID of the food item
   name: { type: String, required: true },  // Name of the food item
   quantity: { type: Number, required: true },  // Quantity ordered
   price: { type: Number, required: true },  // Price of the item

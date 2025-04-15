@@ -101,13 +101,14 @@ exports.placeOrder = async (req, res) => {
   // Map items_uID to actual food items
   const itemDetails = [];
   for (const item of items) {
-    const foodItem = await FoodItem.findOne({ _id: item.uID });
+    console.log(item);
+    const foodItem = await FoodItem.findOne({ _id: item._id });
     if (!foodItem) {
-      return res.status(400).json({ error: `Food item with uID ${item.uID} not found` });
+      return res.status(400).json({ error: `Food item with uID ${item._id} not found` });
     }
 
     itemDetails.push({
-      uID: item.uID,
+      _id: item._id,
       name: foodItem.name,
       quantity: item.quantity,
       price: foodItem.price,
