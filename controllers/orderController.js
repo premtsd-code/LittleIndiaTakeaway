@@ -3,10 +3,10 @@ const DeliverySlot = require('../models/DeliverySlot');  // Import DeliverySlot 
 const FoodItem = require('../models/FoodItem');  // Import FoodItem model
 const User = require('../models/User');  // Import User model
 
-
 // Function to create a new order
 exports.createOrder = async (req, res) => {
-    console.log("hello hello, this is second clone");
+  console.log("hello hello, this is second clone");
+
   const { customer, type, timeSlot, items } = req.body; // Extract data from the request body
 
   try {
@@ -19,7 +19,7 @@ exports.createOrder = async (req, res) => {
       customer,
       type,
       timeSlot,
-      items
+      items,
     });
 
     // Save the order to the database
@@ -28,7 +28,7 @@ exports.createOrder = async (req, res) => {
     // Send the response with the newly created order
     res.status(201).json({
       message: 'Order created successfully',
-      order: newOrder
+      order: newOrder,
     });
   } catch (err) {
     console.error('Error creating order:', err);
@@ -44,7 +44,6 @@ exports.getAllOrders = async (req, res) => {
     res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
   }
 };
-
 
 exports.updateOrder = async (req, res) => {
   const { orderId } = req.params;  // Get orderId from request params
@@ -69,13 +68,11 @@ exports.updateOrder = async (req, res) => {
   }
 };
 
-
-
-/// Place an order
+// Place an order
 exports.placeOrder = async (req, res) => {
   const {
     customer, type, timeSlot, items, discount, shipping, subtotal, terms, total,
-    address, county, eircode, email, phone, userId
+    address, county, eircode, email, phone, userId,
   } = req.body;
 
   // Validate if all required fields are provided
@@ -163,14 +160,17 @@ exports.placeOrder = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error placing the order', message: error.message });
-//dashboard apis :
+  }
+};
+
+// Dashboard APIs:
 exports.getTotalOrderCount = async (req, res) => {
   try {
     const orders = await Order.find();
-    const size=orders.length;
+    const size = orders.length;
     res.status(200).json({
-      countOfOrders: size
-    });       
+      countOfOrders: size,
+    });
   } catch (err) {
     res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
   }
@@ -179,10 +179,10 @@ exports.getTotalOrderCount = async (req, res) => {
 exports.getTotalPendingOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'Pending' });
-    const size=orders.length;
+    const size = orders.length;
     res.status(200).json({
-      countOfPendingOrders: size
-    });       
+      countOfPendingOrders: size,
+    });
   } catch (err) {
     res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
   }
@@ -191,10 +191,10 @@ exports.getTotalPendingOrdersCount = async (req, res) => {
 exports.getTotalCompletedOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'Completed' });
-    const size=orders.length;
+    const size = orders.length;
     res.status(200).json({
-      countOfCompletedOrders: size
-    });       
+      countOfCompletedOrders: size,
+    });
   } catch (err) {
     res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
   }
@@ -203,24 +203,23 @@ exports.getTotalCompletedOrdersCount = async (req, res) => {
 exports.getTotalOnHoldOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'OnHold' });
-    const size=orders.length;
+    const size = orders.length;
     res.status(200).json({
-      countOfOnHoldOrders: size
-    });       
+      countOfOnHoldOrders: size,
+    });
   } catch (err) {
     res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
   }
 };
 
 exports.getAllOrders = async (req, res) => {
-try {
-  const orders = await Order.find();  // This will fetch all orders from the database
-  res.status(200).json(orders);       // Send the orders as a JSON response
-} catch (err) {
-  res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
-}
+  try {
+    const orders = await Order.find();  // This will fetch all orders from the database
+    res.status(200).json(orders);       // Send the orders as a JSON response
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching orders' });  // Handle any errors that occur
+  }
 };
-
 
 exports.getTop5PendingOrders = async (req, res) => {
   try {
@@ -237,7 +236,6 @@ exports.getTop5PendingOrders = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch pending orders' });
   }
 };
-
 
 exports.getTop5CompletedOrders = async (req, res) => {
   try {
