@@ -5,6 +5,8 @@ const cloudinary = require('cloudinary').v2;
 const cors = require('cors');  // For enabling cross-origin requests from React
 const authRoutes = require('./routes/authRoutes');
 const foodItemRoutes = require('./routes/foodItemRoutes');
+const dashboardRoutes=require('./routes/dashboardRoutes');
+
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerOptions = {
@@ -55,19 +57,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));  // Apply CORS middleware
 
-// CSRF setup
 const csrf = require('csrf');
 
-// Disable CSRF protection globally or on specific routes
 const csrfProtection = csrf({ cookie: true });
-// If you want to disable CSRF for the entire app, remove or comment the next line
-// app.use(csrfProtection);  // This line disables CSRF protection for the entire app
 
-// For specific routes where CSRF is needed, apply it individually
-// For example:
-// app.post('/api/your-protected-route', csrfProtection, (req, res) => {
-//   res.json({ csrfToken: req.csrfToken() });
-// });
 app.options('*', cors(corsOptions));
 app.get('/', function(req, res) {
   res.send('Use Postman.');
@@ -78,4 +71,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/deliveryslots', deliverySlotsRoutes);
 app.use('/api/orders', orderRoutes);  // Register the order routes
 app.use('/api/fooditems', foodItemRoutes);
+app.use('/api', dashboardRoutes);
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
