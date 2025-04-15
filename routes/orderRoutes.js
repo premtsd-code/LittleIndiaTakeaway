@@ -6,6 +6,8 @@ const orderController = require('../controllers/orderController'); // Import the
 router.post('/', orderController.createOrder);
 router.get('/', orderController.getAllOrders);  
 router.put('/updateOrder/:orderId', orderController.updateOrder);
+router.post('/placeOrder', orderController.placeOrder);
+
 router.get('/top5pending', orderController.getTop5PendingOrders);
 router.get('/top5completed', orderController.getTop5CompletedOrders);
 router.get('/totalCountOfOrders', orderController.getTotalOrderCount);
