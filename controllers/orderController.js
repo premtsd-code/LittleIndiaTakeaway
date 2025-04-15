@@ -101,7 +101,6 @@ exports.placeOrder = async (req, res) => {
   // Map items_uID to actual food items
   const itemDetails = [];
   for (const item of items) {
-    console.log(item);
     const foodItem = await FoodItem.findOne({ _id: item._id });
     if (!foodItem) {
       return res.status(400).json({ error: `Food item with uID ${item._id} not found` });
@@ -115,9 +114,10 @@ exports.placeOrder = async (req, res) => {
     });
   }
 
-  // Update the time slot availability to false after order is placed
-  if (type === 'Delivery') {
+
     const deliverySlot = await DeliverySlot.findOne({ 'timeSlots.time': timeSlot });
+
+    console.log(deliverySlot);
     if (deliverySlot) {
       const timeSlotIndex = deliverySlot.timeSlots.findIndex(ts => ts.time === timeSlot);
       if (timeSlotIndex > -1) {
@@ -126,7 +126,6 @@ exports.placeOrder = async (req, res) => {
         await deliverySlot.save(); // Save the updated time slot status
       }
     }
-  }
 
   // Create a new order instance
   try {
