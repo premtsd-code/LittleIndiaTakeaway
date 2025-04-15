@@ -114,18 +114,29 @@ exports.placeOrder = async (req, res) => {
     });
   }
 
+  let date = new Date();
+  let day = date.getDay();
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const deliverySlot = await DeliverySlot.findOne({ day: daysOfWeek[day] });
 
-    const deliverySlot = await DeliverySlot.findOne({ 'timeSlots.time': timeSlot });
-
-    console.log(deliverySlot);
-    if (deliverySlot) {
-      const timeSlotIndex = deliverySlot.timeSlots.findIndex(ts => ts.time === timeSlot);
-      if (timeSlotIndex > -1) {
-        // Set the availability to false for the selected time slot
-        deliverySlot.timeSlots[timeSlotIndex].available = false;
-        await deliverySlot.save(); // Save the updated time slot status
+  if (deliverySlot) {
+    let timeSlotFound = false;
+    deliverySlot.timeSlots.forEach(slot => {
+      if (slot.time === timeSlot && slot.available==true) {
+        timeSlotFound = true;
+        slot.available = false;
       }
+    });
+    if (timeSlotFound) {
+      await deliverySlot.save(); 
+    } else {
+      return res.status(500).json({ error: 'Error placing the order', message: "TimeSlot not found" });
     }
+  } else {
+    return res.status(500).json({ error: 'Error placing the order', message: "TimeSlot Issue - No slot found for today" });
+  }
+
+  
 
   // Create a new order instance
   try {
@@ -152,16 +163,18 @@ exports.placeOrder = async (req, res) => {
     // Save the order to the database
     await order.save();
 
-    // Send a response back with the order details
-    res.status(201).json({
+    // Send the response back with the order details
+    return res.status(201).json({
       message: 'Order placed successfully',
       order: order,
     });
+
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error placing the order', message: error.message });
+    return res.status(500).json({ error: 'Error placing the order', message: error.message });
   }
 };
+
 
 // Dashboard APIs:
 exports.getTotalOrderCount = async (req, res) => {
@@ -262,18 +275,18 @@ exports.getAllOrdersForUser = async (req, res) => {
   try {
     // Find orders that match the userId
 
-      // Find the user by userId and ensure the user exists
-  let user;
-  try {
-    user = await User.findOne({ userID: userId });
-    if (!user) {
-      return res.status(400).json({ error: `User with userId ${userId} not found` });
+    // Find the user by userId and ensure the user exists
+    let user;
+    try {
+      user = await User.findOne({ userID: userId });
+      if (!user) {
+        return res.status(400).json({ error: `User with userId ${userId} not found` });
+      }
+    } catch (err) {
+      return res.status(500).json({ error: 'Error finding user', message: err.message });
     }
-  } catch (err) {
-    return res.status(500).json({ error: 'Error finding user', message: err.message });
-  }
 
-  console.log(user._id);
+    console.log(user._id);
 
     const orders = await Order.find({ userId: user._id });  // Filtering by userId
 

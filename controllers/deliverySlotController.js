@@ -66,9 +66,10 @@ exports.openCloseRestaurant = async (req, res) => {
 
   exports.getAvailableTimeSlots = async (req, res) => {
     try {
-      
-      const daysOfWeek = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const currentDay = daysOfWeek[new Date().getDay()];  
+
+      const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const currentDay = daysOfWeek[new Date().getDay()];  // Get the current day as a string
+
   
      
       const deliverySlot = await DeliverySlot.findOne({ day: currentDay });
