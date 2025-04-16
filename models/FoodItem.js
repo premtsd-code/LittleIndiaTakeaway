@@ -3,42 +3,41 @@ const mongoose = require('mongoose');
 const foodItemSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true, // Food item must have a name
+    required: true,
   },
   description: {
     type: String,
-    required: true, // Food item must have a description
+    required: true,
   },
   price: {
     type: Number,
-    required: true, // Price is mandatory
-    min: 0, // Price cannot be negative
+    required: true,
+    min: 0,
   },
   category: {
     type: String,
-    enum: ['STARTERS', 'MAINCOURSE', 'DESSERTS', 'DRINKS'], // Enum categories
+    enum: ['STARTERS', 'MAINCOURSE', 'DESSERTS', 'DRINKS'],
     required: true,
   },
   imageURL: {
     type: String,
-    required: true, // Image URL for the food item
+    required: true,
   },
   isVisible: {
     type: Boolean,
-    default: true, // Whether the food item is visible to customers
+    default: true,
   },
   createdAt: {
     type: Date,
-    default: Date.now, // Automatically set creation date
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now, // Automatically set update date
+    default: Date.now,
   },
 });
 
-// Add a pre-save hook to update the `updatedAt` field
-foodItemSchema.pre('save', function(next) {
+foodItemSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });

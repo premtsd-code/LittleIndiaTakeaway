@@ -34,7 +34,8 @@ exports.login = async (req, res) => {
   const filteredUser = {
     userID: user.userID,
     name: user.name,
-    email: user.email
+    email: user.email,
+    role:user.role
   };
 
   res.json({ token, user: filteredUser });

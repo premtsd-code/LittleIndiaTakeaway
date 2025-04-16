@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const orderController = require('../controllers/orderController'); // Import the controller
+const orderController = require('../controllers/orderController');
 
-// POST route to create a new order
 router.post('/', orderController.createOrder);
 router.get('/', orderController.getAllOrders); 
 router.get('/userOrder/:userId', orderController.getAllOrdersForUser);  
