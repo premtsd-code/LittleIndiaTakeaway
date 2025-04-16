@@ -5,7 +5,7 @@ const FoodItem = require('../models/FoodItem');
 
 
 exports.getPublishedMenu = async (req, res) => {
-  const items = await FoodItem.find({ isVisible:true });
+  const items = await FoodItem.find({ isVisible: true });
   res.json(items);
 };
 
