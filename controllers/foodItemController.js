@@ -1,12 +1,12 @@
 const FoodItem = require('../models/FoodItem');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
-const multerStorageCloudinary = require('multer-storage-cloudinary'); 
+const multerStorageCloudinary = require('multer-storage-cloudinary');
 const storage = new multerStorageCloudinary.CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'restaurant-takeaway-images',  
-    allowed_formats: ['jpg', 'jpeg', 'png'],  
+    folder: 'restaurant-takeaway-images',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
   },
 });
 const upload = multer({ storage });
@@ -22,7 +22,7 @@ exports.createFoodItem = async (req, res) => {
     const { name, description, price, category, isVisible } = req.body;
 
     try {
-     
+
       const result = await cloudinary.uploader.upload(req.file.path, {
         transformation: [
           { width: 200, height: 220, crop: "auto", gravity: "auto" }
@@ -89,7 +89,7 @@ exports.updateFoodItem = async (req, res) => {
     try {
       let imageURL;
 
-     
+
       if (req.file) {
         const result = await cloudinary.uploader.upload(req.file.path, {
           transformation: [
@@ -100,7 +100,7 @@ exports.updateFoodItem = async (req, res) => {
         imageURL = result.secure_url;
       }
 
-      
+
       const updateData = {
         name,
         description,

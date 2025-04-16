@@ -1,9 +1,9 @@
-const axios = require('axios'); 
+const axios = require('axios');
 
 exports.getDashboardData = async (req, res) => {
   try {
     console.log("You hit the dashboard api");
-    
+
     const allOrdersResponse = await axios.get('https://littleindia-f52f947eb8a9.herokuapp.com/api/orders//totalCountOfOrders'); // Replace with the actual URL of your API
     const allOrders = allOrdersResponse.data;
     console.log("You hit the dashboard api");
@@ -21,19 +21,19 @@ exports.getDashboardData = async (req, res) => {
     const top5PendingOrdersResponse = await axios.get('https://littleindia-f52f947eb8a9.herokuapp.com/api/orders/top5pending'); // Replace with the actual URL of your API
     const top5PendingOrders = top5PendingOrdersResponse.data;
     console.log("You hit the dashboard api");
-   
+
     const top5CompletedOrdersResponse = await axios.get('https://littleindia-f52f947eb8a9.herokuapp.com/api/orders/top5completed'); // Replace with the actual URL of your API
     const top5CompletedOrders = top5CompletedOrdersResponse.data;
     console.log("You hit the dashboard api");
-   
+
     const availableSlotsResponse = await axios.get('https://littleindia-f52f947eb8a9.herokuapp.com/api/deliveryslots/available'); // Replace with the actual URL of your API
     const availableSlots = availableSlotsResponse.data;
     console.log("You hit the dashboard api");
-    
+
     const blockedSlotsResponse = await axios.get('https://littleindia-f52f947eb8a9.herokuapp.com/api/deliveryslots/blocked'); // Replace with the actual URL of your API
     const blockedSlots = blockedSlotsResponse.data;
     console.log("You hit the dashboard api");
-    
+
     res.status(200).json({
       allOrders,
       pendingOrders,

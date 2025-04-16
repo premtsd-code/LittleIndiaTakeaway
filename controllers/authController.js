@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
     { expiresIn: '2h' }
   );
 
-  
+
   const filteredUser = {
     userID: user.userID,
     name: user.name,
