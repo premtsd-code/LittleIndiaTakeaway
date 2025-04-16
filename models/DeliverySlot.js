@@ -11,7 +11,7 @@ const timeSlotSchema = new mongoose.Schema({
 const generateTimeSlots = () => {
   const timeSlots = [];
   const times = [
-    '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'
+    '9 AM', '10 AM', '11 AM', '12 PM', '1  PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM', '7 PM', '8 PM'
   ];
 
   // Create time slots with available: false by default

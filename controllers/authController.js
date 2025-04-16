@@ -30,7 +30,7 @@ exports.login = async (req, res) => {
     { expiresIn: '2h' }
   );
 
-  // Only return selected user fields
+  
   const filteredUser = {
     userID: user.userID,
     name: user.name,
