@@ -1,19 +1,18 @@
 const FoodItem = require('../models/FoodItem');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
-const multerStorageCloudinary = require('multer-storage-cloudinary');  // Ensure correct import
+const multerStorageCloudinary = require('multer-storage-cloudinary');
 const storage = new multerStorageCloudinary.CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'restaurant-takeaway-images',  // Specify the Cloudinary folder
-    allowed_formats: ['jpg', 'jpeg', 'png'],  // Allowed image formats
+    folder: 'restaurant-takeaway-images',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
   },
 });
 const upload = multer({ storage });
 
 
-// Create a new food item
-// Create a new food item with image upload to Cloudinary
+
 exports.createFoodItem = async (req, res) => {
   upload.single('image')(req, res, async (err) => {
     if (err) {
@@ -23,7 +22,7 @@ exports.createFoodItem = async (req, res) => {
     const { name, description, price, category, isVisible } = req.body;
 
     try {
-      // Upload to Cloudinary with transformations
+
       const result = await cloudinary.uploader.upload(req.file.path, {
         transformation: [
           { width: 200, height: 220, crop: "auto", gravity: "auto" }
@@ -52,7 +51,7 @@ exports.createFoodItem = async (req, res) => {
 
 
 
-// Get a single food item by ID
+
 exports.getOneFoodItem = async (req, res) => {
   const { itemId } = req.params;
 
@@ -67,7 +66,7 @@ exports.getOneFoodItem = async (req, res) => {
   }
 };
 
-// Get all food items
+
 exports.getAllFoodItems = async (req, res) => {
   try {
     const foodItems = await FoodItem.find();
@@ -77,7 +76,7 @@ exports.getAllFoodItems = async (req, res) => {
   }
 };
 
-// Update an existing food item by ID with optional image upload
+
 exports.updateFoodItem = async (req, res) => {
   upload.single('image')(req, res, async (err) => {
     if (err) {
@@ -90,7 +89,7 @@ exports.updateFoodItem = async (req, res) => {
     try {
       let imageURL;
 
-      // If an image is uploaded, process with Cloudinary
+
       if (req.file) {
         const result = await cloudinary.uploader.upload(req.file.path, {
           transformation: [
@@ -101,7 +100,7 @@ exports.updateFoodItem = async (req, res) => {
         imageURL = result.secure_url;
       }
 
-      // Build update data object
+
       const updateData = {
         name,
         description,
@@ -133,7 +132,7 @@ exports.updateFoodItem = async (req, res) => {
 
 
 
-// Delete a food item by ID
+
 exports.deleteFoodItem = async (req, res) => {
   const { itemId } = req.params;
 

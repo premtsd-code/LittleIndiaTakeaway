@@ -3,26 +3,9 @@ const DeliverySlot = require('../models/DeliverySlot');
 const FoodItem = require('../models/FoodItem');
 
 
-/**
- * @swagger
- * /api/customer/menu:
- *   get:
- *     summary: Get all published menu items
- *     description: Returns a list of food items marked as visible.
- *     tags:
- *       - Customer Menu
- *     responses:
- *       200:
- *         description: A list of visible food items
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/FoodItem'
- */
+
 exports.getPublishedMenu = async (req, res) => {
-  const items = await FoodItem.find({ isVisible:true });
+  const items = await FoodItem.find({ isVisible: true });
   res.json(items);
 };
 
