@@ -3,11 +3,7 @@ const mongoose = require('mongoose');
 // Time Slot Schema - for storing time and availability
 const timeSlotSchema = new mongoose.Schema({
   time: String,       // E.g., "9:00 AM"
-  available: {
-    type: Boolean,
-    default: null,    // Set the default value to null
-    enum: [true, false, null],  // Explicitly allow true, false, or null
-  }
+  available: Boolean  // True if the time slot is available, false otherwise
 });
 
 
@@ -22,7 +18,7 @@ const generateTimeSlots = () => {
   times.forEach(time => {
     timeSlots.push({
       time,
-      available: null
+      available: false
     });
   });
 
