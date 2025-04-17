@@ -2,6 +2,8 @@ const FoodItem = require('../models/FoodItem');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const multerStorageCloudinary = require('multer-storage-cloudinary');
+
+// Configure multer storage with Cloudinary
 const storage = new multerStorageCloudinary.CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -11,8 +13,7 @@ const storage = new multerStorageCloudinary.CloudinaryStorage({
 });
 const upload = multer({ storage });
 
-
-
+// Create a new food item
 exports.createFoodItem = async (req, res) => {
   upload.single('image')(req, res, async (err) => {
     if (err) {
@@ -22,7 +23,6 @@ exports.createFoodItem = async (req, res) => {
     const { name, description, price, category, isVisible } = req.body;
 
     try {
-
       const result = await cloudinary.uploader.upload(req.file.path, {
         transformation: [
           { width: 200, height: 220, crop: "auto", gravity: "auto" }
@@ -48,10 +48,7 @@ exports.createFoodItem = async (req, res) => {
   });
 };
 
-
-
-
-
+// Get a single food item by ID
 exports.getOneFoodItem = async (req, res) => {
   const { itemId } = req.params;
 
@@ -66,7 +63,7 @@ exports.getOneFoodItem = async (req, res) => {
   }
 };
 
-
+// Get all food items
 exports.getAllFoodItems = async (req, res) => {
   try {
     const foodItems = await FoodItem.find();
@@ -76,7 +73,7 @@ exports.getAllFoodItems = async (req, res) => {
   }
 };
 
-
+// Update an existing food item
 exports.updateFoodItem = async (req, res) => {
   upload.single('image')(req, res, async (err) => {
     if (err) {
@@ -89,7 +86,6 @@ exports.updateFoodItem = async (req, res) => {
     try {
       let imageURL;
 
-
       if (req.file) {
         const result = await cloudinary.uploader.upload(req.file.path, {
           transformation: [
@@ -99,7 +95,6 @@ exports.updateFoodItem = async (req, res) => {
 
         imageURL = result.secure_url;
       }
-
 
       const updateData = {
         name,
@@ -130,9 +125,7 @@ exports.updateFoodItem = async (req, res) => {
   });
 };
 
-
-
-
+// Delete a food item by ID
 exports.deleteFoodItem = async (req, res) => {
   const { itemId } = req.params;
 
@@ -147,6 +140,7 @@ exports.deleteFoodItem = async (req, res) => {
   }
 };
 
+// Bulk update visibility of food items
 exports.bulkUpdateVisibility = async (req, res) => {
   try {
     const { updates } = req.body;
@@ -173,4 +167,3 @@ exports.bulkUpdateVisibility = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
