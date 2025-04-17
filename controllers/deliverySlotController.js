@@ -116,7 +116,7 @@ exports.getBlockedTimeSlots = async (req, res) => {
 // Save the updated schedule for delivery slots (toggle availability of multiple slots)
 exports.toggleDeliverySlots = async (req, res) => {
   const daysData = req.body;  // Get the data (days and time slots) from the request body
-  console.log(daysData);
+  console.log(JSON.stringify(daysData));
 
   // Ensure that the input format is an array
   if (!Array.isArray(daysData)) {
