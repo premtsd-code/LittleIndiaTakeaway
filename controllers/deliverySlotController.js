@@ -4,7 +4,6 @@ exports.getAllDeliverySlots = async (req, res) => {
   try {
     // Fetch all delivery slots from the database
     const deliverySlots = await DeliverySlot.find();
-    console.log(deliverySlots);
     res.status(200).json(deliverySlots);  // Return the delivery slots as JSON
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch delivery slots' });
@@ -116,7 +115,6 @@ exports.getBlockedTimeSlots = async (req, res) => {
 // Save the updated schedule for delivery slots (toggle availability of multiple slots)
 exports.toggleDeliverySlots = async (req, res) => {
   const daysData = req.body;  // Get the data (days and time slots) from the request body
-  console.log(JSON.stringify(daysData));
 
   // Ensure that the input format is an array
   if (!Array.isArray(daysData)) {
@@ -127,6 +125,9 @@ exports.toggleDeliverySlots = async (req, res) => {
     // Iterate over the data for each day and update the delivery slots
     for (const dayData of daysData) {
       const { day, timeSlots } = dayData;
+      if(day=='Monday'){
+        console.log(dayData)
+      }
 
       // Find the delivery slot for the specified day
       const deliverySlot = await DeliverySlot.findOne({ day });
