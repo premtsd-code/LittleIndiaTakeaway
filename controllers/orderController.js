@@ -4,73 +4,6 @@ const FoodItem = require('../models/FoodItem');
 const User = require('../models/User');
 
 
-//api to place an order
-exports.createOrder = async (req, res) => {
- 
-
-  const { customer, type, timeSlot, items } = req.body;
-
-  try {
-    // Generate a unique order ID
-    const orderId = `ORD${Math.floor(Math.random() * 100000)}`;
-
-    // Create a new order instance with the provided details
-    const newOrder = new Order({
-      orderId,
-      customer,
-      type,
-      timeSlot,
-      items,
-    });
-
-    // Save the new order to the database
-    await newOrder.save();
-
-    // Respond with the success message and order data
-    res.status(201).json({
-      message: 'Order created successfully',
-      order: newOrder,
-    });
-  } catch (err) {
-    console.error('Error creating order:', err);
-    res.status(500).json({ error: 'Failed to create order' });
-  }
-};
-
-// Retrieve all orders
-exports.getAllOrders = async (req, res) => {
-  try {
-    const orders = await Order.find();
-    res.status(200).json(orders);
-  } catch (err) {
-    res.status(500).json({ error: 'Error fetching orders' });
-  }
-};
-
-// Update an existing order by orderId
-exports.updateOrder = async (req, res) => {
-  const { orderId } = req.params;
-  const updateData = req.body;
-
-  try {
-    // Update the order with the provided data
-    const updatedOrder = await Order.findOneAndUpdate(
-      { orderId: orderId },
-      { $set: updateData },
-      { new: true }
-    );
-
-    if (!updatedOrder) {
-      return res.status(404).json({ message: 'Order not found' });
-    }
-
-    // Respond with the updated order
-    res.status(200).json({ message: 'Order updated successfully', order: updatedOrder });
-  } catch (err) {
-    res.status(500).json({ error: 'Error updating order', details: err.message });
-  }
-};
-
 // Place an order
 exports.placeOrder = async (req, res) => {
   const {
@@ -177,6 +110,40 @@ exports.placeOrder = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Error placing the order', message: error.message });
+  }
+};
+
+// Retrieve all orders
+exports.getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
+    res.status(200).json(orders);
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching orders' });
+  }
+};
+
+// Update an existing order by orderId
+exports.updateOrder = async (req, res) => {
+  const { orderId } = req.params;
+  const updateData = req.body;
+
+  try {
+    // Update the order with the provided data
+    const updatedOrder = await Order.findOneAndUpdate(
+      { orderId: orderId },
+      { $set: updateData },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Respond with the updated order
+    res.status(200).json({ message: 'Order updated successfully', order: updatedOrder });
+  } catch (err) {
+    res.status(500).json({ error: 'Error updating order', details: err.message });
   }
 };
 
