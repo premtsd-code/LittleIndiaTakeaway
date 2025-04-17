@@ -47,12 +47,11 @@ cloudinary.config({
 });
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  origin: ['http://localhost:3000', 'https://eloquent-starlight-43d9b9.netlify.app'], 
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'], 
+  allowedHeaders: ['Content-Type', 'Authorization'], 
+  credentials: true, 
 };
-
 
 app.use(cors(corsOptions));
 
