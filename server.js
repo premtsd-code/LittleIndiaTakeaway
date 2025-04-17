@@ -7,27 +7,6 @@ const authRoutes = require('./routes/authRoutes');
 const foodItemRoutes = require('./routes/foodItemRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Restaurant Takeaway API',
-      version: '1.0.0',
-      description: 'API Documentation for the Restaurant Takeaway Site',
-    },
-    servers: [
-      {
-        url: 'https://littleindia-f52f947eb8a9.herokuapp.com',
-      },
-    ],
-  },
-  apis: ['./routes/*.js'],
-};
-
-const swaggerDocs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const customerRoutes = require('./routes/customerRoutes');
 const deliverySlotsRoutes = require('./routes/deliverySlotsRoutes');
@@ -47,10 +26,10 @@ cloudinary.config({
 });
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://eloquent-starlight-43d9b9.netlify.app'], 
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'], 
-  allowedHeaders: ['Content-Type', 'Authorization'], 
-  credentials: true, 
+  origin: ['http://localhost:3000', 'https://eloquent-starlight-43d9b9.netlify.app'],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));

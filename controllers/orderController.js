@@ -118,6 +118,7 @@ exports.placeOrder = async (req, res) => {
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const deliverySlot = await DeliverySlot.findOne({ day: daysOfWeek[day] });
 
+  if(type === 'Delivery')
   if (deliverySlot) {
     let timeSlotFound = false;
     deliverySlot.timeSlots.forEach(slot => {
