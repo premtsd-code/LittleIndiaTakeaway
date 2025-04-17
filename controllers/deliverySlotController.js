@@ -153,7 +153,14 @@ exports.toggleDeliverySlots = async (req, res) => {
       }
 
       // Save the updated delivery slot
-      await deliverySlot.save();
+      daysData=await deliverySlot.save();
+
+      for (const dayData of daysData) {
+        const { day, timeSlots } = dayData;
+        if(day=='Monday' || day==1){
+          console.log(dayData)
+        }
+      }
     }
 
     res.status(200).json({ message: 'Delivery slots updated successfully' });
