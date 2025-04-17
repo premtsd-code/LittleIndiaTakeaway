@@ -1,5 +1,11 @@
 const DeliverySlot = require('../models/DeliverySlot');
 
+<<<<<<< HEAD
+=======
+
+
+//to gather all the delivery slots
+>>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getAllDeliverySlots = async (req, res) => {
   try {
     // Fetch all delivery slots from the database
@@ -11,7 +17,12 @@ exports.getAllDeliverySlots = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // Open or close the restaurant for a specific day
+=======
+
+//to mark restaurant as open on a given day
+>>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.openCloseRestaurant = async (req, res) => {
   const { day } = req.params;  // Get the day from the route parameter
 
@@ -37,7 +48,12 @@ exports.openCloseRestaurant = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // Toggle availability of a specific time slot for a specific day
+=======
+
+//to toggle any time slot on a given day
+>>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.toggleTimeSlot = async (req, res) => {
   const { day, time } = req.params;  // Get the day and time from the route parameters
 
@@ -65,7 +81,12 @@ exports.toggleTimeSlot = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // Get all available time slots for the current day
+=======
+
+//get all available time slots of current day
+>>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getAvailableTimeSlots = async (req, res) => {
   try {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -89,7 +110,12 @@ exports.getAvailableTimeSlots = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // Get all blocked time slots for the current day
+=======
+
+//get all blocked time slots of current day
+>>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getBlockedTimeSlots = async (req, res) => {
   try {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

@@ -6,7 +6,13 @@ const timeSlotSchema = new mongoose.Schema({
   available: Boolean  // Whether the time slot is available for delivery (true/false)
 });
 
+<<<<<<< HEAD
 // Function to generate default time slots for the day
+=======
+
+
+
+>>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 const generateTimeSlots = () => {
   const timeSlots = [];
   const times = [
@@ -24,7 +30,12 @@ const generateTimeSlots = () => {
   return timeSlots;
 };
 
+<<<<<<< HEAD
 // DeliverySlot schema representing the available delivery slots for each day
+=======
+
+//populating the deliveryslots with this data
+>>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 const deliverySlotSchema = new mongoose.Schema({
   day: { 
     type: String, 
