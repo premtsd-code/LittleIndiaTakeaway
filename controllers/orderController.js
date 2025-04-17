@@ -3,8 +3,10 @@ const DeliverySlot = require('../models/DeliverySlot');
 const FoodItem = require('../models/FoodItem');
 const User = require('../models/User');
 
+
+//api to place an order
 exports.createOrder = async (req, res) => {
-  console.log("hello hello, this is second clone");
+ 
 
   const { customer, type, timeSlot, items } = req.body;
 
@@ -35,6 +37,8 @@ exports.createOrder = async (req, res) => {
   }
 };
 
+
+//api to get all the orders
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find();
@@ -44,6 +48,8 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
+
+//api to update status of an order
 exports.updateOrder = async (req, res) => {
   const { orderId } = req.params;
   const updateData = req.body;
@@ -66,6 +72,7 @@ exports.updateOrder = async (req, res) => {
     res.status(500).json({ error: 'Error updating order', details: err.message });
   }
 };
+
 
 
 exports.placeOrder = async (req, res) => {
@@ -176,7 +183,7 @@ exports.placeOrder = async (req, res) => {
 };
 
 
-
+//api to get the total number of orders
 exports.getTotalOrderCount = async (req, res) => {
   try {
     const orders = await Order.find();
@@ -189,6 +196,8 @@ exports.getTotalOrderCount = async (req, res) => {
   }
 };
 
+
+//api to get the total number of pending orders
 exports.getTotalPendingOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'Pending' });
@@ -201,6 +210,7 @@ exports.getTotalPendingOrdersCount = async (req, res) => {
   }
 };
 
+//api to get the total number of completed orders
 exports.getTotalCompletedOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'Completed' });
@@ -213,6 +223,7 @@ exports.getTotalCompletedOrdersCount = async (req, res) => {
   }
 };
 
+//api to get the total number of on-hold orders
 exports.getTotalOnHoldOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'OnHold' });
@@ -225,6 +236,7 @@ exports.getTotalOnHoldOrdersCount = async (req, res) => {
   }
 };
 
+//api to view all the orders
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find();
@@ -234,6 +246,8 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
+
+//api to view the top 5 pending orders
 exports.getTop5PendingOrders = async (req, res) => {
   try {
     const pendingOrders = await Order.find({ status: 'Pending' })
@@ -250,6 +264,7 @@ exports.getTop5PendingOrders = async (req, res) => {
   }
 };
 
+//api to view the top 5 completed orders
 exports.getTop5CompletedOrders = async (req, res) => {
   try {
     const completedOrders = await Order.find({ status: 'Completed' })
@@ -267,7 +282,7 @@ exports.getTop5CompletedOrders = async (req, res) => {
 };
 
 
-
+//api to get all orders based on user id
 exports.getAllOrdersForUser = async (req, res) => {
   const { userId } = req.params;
   try {

@@ -1,6 +1,8 @@
 const DeliverySlot = require('../models/DeliverySlot');
 
 
+
+//to gather all the delivery slots
 exports.getAllDeliverySlots = async (req, res) => {
   try {
     const deliverySlots = await DeliverySlot.find();
@@ -12,6 +14,7 @@ exports.getAllDeliverySlots = async (req, res) => {
 };
 
 
+//to mark restaurant as open on a given day
 exports.openCloseRestaurant = async (req, res) => {
   const { day } = req.params;
   try {
@@ -35,6 +38,8 @@ exports.openCloseRestaurant = async (req, res) => {
   }
 };
 
+
+//to toggle any time slot on a given day
 exports.toggleTimeSlot = async (req, res) => {
   const { day, time } = req.params;
 
@@ -64,6 +69,7 @@ exports.toggleTimeSlot = async (req, res) => {
 };
 
 
+//get all available time slots of current day
 exports.getAvailableTimeSlots = async (req, res) => {
   try {
 
@@ -91,6 +97,7 @@ exports.getAvailableTimeSlots = async (req, res) => {
 };
 
 
+//get all blocked time slots of current day
 exports.getBlockedTimeSlots = async (req, res) => {
   try {
 

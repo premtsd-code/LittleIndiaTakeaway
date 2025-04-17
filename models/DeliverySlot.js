@@ -6,6 +6,8 @@ const timeSlotSchema = new mongoose.Schema({
 });
 
 
+
+
 const generateTimeSlots = () => {
   const timeSlots = [];
   const times = [
@@ -22,6 +24,8 @@ const generateTimeSlots = () => {
   return timeSlots;
 };
 
+
+//populating the deliveryslots with this data
 const deliverySlotSchema = new mongoose.Schema({
   day: { type: String, enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], required: true },
   isOpen: { type: Boolean, required: false },
