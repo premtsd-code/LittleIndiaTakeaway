@@ -37,12 +37,7 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Retrieve all orders
-=======
-
-//api to get all the orders
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find();
@@ -52,12 +47,7 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Update an existing order by orderId
-=======
-
-//api to update status of an order
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.updateOrder = async (req, res) => {
   const { orderId } = req.params;
   const updateData = req.body;
@@ -81,12 +71,7 @@ exports.updateOrder = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Place an order
-=======
-
-
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.placeOrder = async (req, res) => {
   const {
     customer, type, timeSlot, items, discount, shipping, subtotal, terms, total,
@@ -195,12 +180,7 @@ exports.placeOrder = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Get the total count of orders
-=======
-
-//api to get the total number of orders
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getTotalOrderCount = async (req, res) => {
   try {
     const orders = await Order.find();
@@ -213,12 +193,7 @@ exports.getTotalOrderCount = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Get the total count of pending orders
-=======
-
-//api to get the total number of pending orders
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getTotalPendingOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'Pending' });
@@ -231,11 +206,7 @@ exports.getTotalPendingOrdersCount = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Get the total count of completed orders
-=======
-//api to get the total number of completed orders
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getTotalCompletedOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'Completed' });
@@ -248,11 +219,7 @@ exports.getTotalCompletedOrdersCount = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Get the total count of on-hold orders
-=======
-//api to get the total number of on-hold orders
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getTotalOnHoldOrdersCount = async (req, res) => {
   try {
     const orders = await Order.find({ status: 'OnHold' });
@@ -265,11 +232,7 @@ exports.getTotalOnHoldOrdersCount = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Get all orders
-=======
-//api to view all the orders
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find();
@@ -279,12 +242,7 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Get top 5 pending orders (most recent)
-=======
-
-//api to view the top 5 pending orders
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getTop5PendingOrders = async (req, res) => {
   try {
     const pendingOrders = await Order.find({ status: 'Pending' })
@@ -301,11 +259,7 @@ exports.getTop5PendingOrders = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Get top 5 completed orders (most recent)
-=======
-//api to view the top 5 completed orders
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getTop5CompletedOrders = async (req, res) => {
   try {
     const completedOrders = await Order.find({ status: 'Completed' })
@@ -322,12 +276,7 @@ exports.getTop5CompletedOrders = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 // Get all orders for a specific user
-=======
-
-//api to get all orders based on user id
->>>>>>> ffffa997a6f61c83e5a2bb18ddcca0a8df581513
 exports.getAllOrdersForUser = async (req, res) => {
   const { userId } = req.params;
 
